@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import './App.css'
+import { Button, Input } from '@material-ui/core'
+import { Menu } from './components/Menu/Menu'
+import { ListadoPersonas } from './components/List/List'
 
-function App() {
+export const App = () => {
+  const [personas, setPersonas] = React.useState([])
+  const [newPersona, setNewPersona] = React.useState('')
+  const addPersona = () => {
+    const personasNew = [...personas]
+    personasNew.push({ id: newPersona, nombre: newPersona })
+    setPersonas(personasNew)
+    setNewPersona('')
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {}
+    fetchData()
+  }, [])
+
   return (
     <div className="App">
+      <Menu />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ListadoPersonas personas={personas} />
+        <span>
+          <Input placeholder="Nombre" onChange={e => setNewPersona(e.target.value)} value={newPersona}></Input>
+          <Button onClick={addPersona} variant="contained" color="primary">
+            Añadir persona
+          </Button>
+        </span>
       </header>
     </div>
-  );
+  )
 }
-
-export default App;
